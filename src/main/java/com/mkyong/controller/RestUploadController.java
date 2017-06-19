@@ -1,0 +1,85 @@
+package com.mkyong.controller;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.mkyong.model.UploadModel;
+import com.mkyong.service.UploadService;
+
+@RestController
+public class RestUploadController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(RestUploadController.class);
+
+	@Autowired
+	private UploadService uploadService;
+
+	@PostMapping("/upload/single")
+	// If not @RestController, uncomment this
+	// @ResponseBody
+	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile) throws IOException {
+
+		logger.debug("Single file upload!");
+
+		if (uploadfile.isEmpty()) {
+			return new ResponseEntity<>("please select a file!", HttpStatus.OK);
+		}
+
+		String paths = uploadService.saveUploadedFiles(Arrays.asList(uploadfile));
+
+		return new ResponseEntity<>("Successfully uploaded - " + paths, HttpStatus.OK);
+
+	}
+
+	@PostMapping("/upload/multi")
+	public ResponseEntity<?> uploadFileMulti(@RequestParam("extraField") String extraField,
+			@RequestParam("files") MultipartFile[] uploadfiles, HttpServletRequest
+			request) throws IOException {
+
+		logger.info("Multiple file upload!");
+
+		HttpSession session = request.getSession();
+		String baseDir = (String) session.getAttribute("baseDir");
+		String id = session.getId();
+		
+		logger.info(id + " " + baseDir);
+		
+		String uploadedFileName = Arrays.stream(uploadfiles).map(x -> x.getOriginalFilename())
+				.filter(x -> !StringUtils.isEmpty(x)).collect(Collectors.joining(" , "));
+
+		if (StringUtils.isEmpty(uploadedFileName)) {
+			return new ResponseEntity<>("please select a file!", HttpStatus.OK);
+		}
+		String paths = uploadService.saveUploadedFiles(Arrays.asList(uploadfiles));
+
+		return new ResponseEntity<>("Successfully uploaded - " + paths, HttpStatus.OK);
+
+	}
+
+	// maps html form to a Model
+	@PostMapping("/upload/multi/model")
+	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute UploadModel model) throws IOException {
+
+		logger.debug("Multiple file upload! With UploadModel");
+		String paths = uploadService.saveUploadedFiles(Arrays.asList(model.getFiles()));
+		return new ResponseEntity<>("Successfully uploaded - " + paths, HttpStatus.OK);
+
+	}
+
+}
