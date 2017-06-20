@@ -17,7 +17,6 @@ $(document).ready(function() {
 			loadFile(file);
 		}
 	});
-
 });
 
 function loadFile(file) {
@@ -40,20 +39,14 @@ function uploadFile(formData) {
 		processData : false, //prevent jQuery from automatically transforming the data into a query string
 		contentType : false,
 		cache : false,
-		timeout : 600000,
+		timeout : 0,
 		success : function(data) {
-
 			$("#result").text(data);
 			console.log("SUCCESS : ", data);
-			$("#btnSubmit").prop("disabled", false);
-
 		},
 		error : function(e) {
-
 			$("#result").text(e.responseText);
 			console.log("ERROR : ", e);
-			$("#btnSubmit").prop("disabled", false);
-
 		}
 	});
 }
