@@ -1,7 +1,6 @@
 package com.mkyong.service;
 
 import java.io.IOException;
-import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -9,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface UploadService {
 	
-	public String saveUploadedFiles(String baseDir, List<MultipartFile> files) throws IOException ;
+	public String saveUploadedFileChunks(MultipartFile fileChunk,String fileName) throws IOException ;
+	
+	public String mergeUploadedFile(String baseDir, String fileName) throws IOException ;
 	
 }
