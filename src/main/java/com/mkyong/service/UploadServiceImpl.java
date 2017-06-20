@@ -18,7 +18,7 @@ public class UploadServiceImpl implements UploadService {
 	private String uploadLocation;
 
 	@Override
-	public String saveUploadedFiles(List<MultipartFile> files) throws IOException {
+	public String saveUploadedFiles(String baseDir, List<MultipartFile> files) throws IOException {
 		// TODO Auto-generated method stub
 		List<String> paths = new ArrayList<>();
 		for (MultipartFile file : files) {
@@ -28,9 +28,9 @@ public class UploadServiceImpl implements UploadService {
             }
 
             byte[] bytes = file.getBytes();
-            Path dirPath = Paths.get(uploadLocation);
+            Path dirPath = Paths.get(uploadLocation, baseDir);
             Files.createDirectories(dirPath);
-            Path filePath = Paths.get(uploadLocation, file.getOriginalFilename());
+            Path filePath = Paths.get(dirPath.toString(), file.getOriginalFilename());
             Path result = Files.write(filePath, bytes);
             paths.add(result.toString());
         }

@@ -9,6 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public interface UploadService {
 	
-	public String saveUploadedFiles(List<MultipartFile> files) throws IOException ;
+	public String saveUploadedFiles(String baseDir, List<MultipartFile> files) throws IOException ;
 	
 }

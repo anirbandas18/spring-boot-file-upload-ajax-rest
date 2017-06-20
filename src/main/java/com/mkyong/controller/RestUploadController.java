@@ -33,15 +33,16 @@ public class RestUploadController {
 	@PostMapping("/upload/single")
 	// If not @RestController, uncomment this
 	// @ResponseBody
-	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile) throws IOException {
+	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile, HttpServletRequest request) throws IOException {
 
 		logger.debug("Single file upload!");
 
 		if (uploadfile.isEmpty()) {
 			return new ResponseEntity<>("please select a file!", HttpStatus.OK);
 		}
-
-		String paths = uploadService.saveUploadedFiles(Arrays.asList(uploadfile));
+		HttpSession session = request.getSession();
+		String baseDir = (String) session.getAttribute("baseDir");
+		String paths = uploadService.saveUploadedFiles(baseDir, Arrays.asList(uploadfile));
 
 		return new ResponseEntity<>("Successfully uploaded - " + paths, HttpStatus.OK);
 
@@ -66,7 +67,7 @@ public class RestUploadController {
 		if (StringUtils.isEmpty(uploadedFileName)) {
 			return new ResponseEntity<>("please select a file!", HttpStatus.OK);
 		}
-		String paths = uploadService.saveUploadedFiles(Arrays.asList(uploadfiles));
+		String paths = uploadService.saveUploadedFiles(baseDir, Arrays.asList(uploadfiles));
 
 		return new ResponseEntity<>("Successfully uploaded - " + paths, HttpStatus.OK);
 
@@ -74,10 +75,14 @@ public class RestUploadController {
 
 	// maps html form to a Model
 	@PostMapping("/upload/multi/model")
-	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute UploadModel model) throws IOException {
+	public ResponseEntity<?> multiUploadFileModel(@ModelAttribute UploadModel model, HttpServletRequest
+			request) throws IOException {
 
 		logger.debug("Multiple file upload! With UploadModel");
-		String paths = uploadService.saveUploadedFiles(Arrays.asList(model.getFiles()));
+		HttpSession session = request.getSession();
+		String baseDir = (String) session.getAttribute("baseDir");
+		
+		String paths = uploadService.saveUploadedFiles(baseDir, Arrays.asList(model.getFiles()));
 		return new ResponseEntity<>("Successfully uploaded - " + paths, HttpStatus.OK);
 
 	}
