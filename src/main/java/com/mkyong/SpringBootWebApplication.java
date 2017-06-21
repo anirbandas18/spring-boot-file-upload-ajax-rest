@@ -1,7 +1,11 @@
 package com.mkyong;
 
+import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.embedded.tomcat.TomcatConnectorCustomizer;
+import org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainerFactory;
+import org.springframework.context.annotation.Bean;
 
 //https://www.agilegroup.co.jp/technote/springboot-fileupload-error-handling.html
 @SpringBootApplication
@@ -13,7 +17,7 @@ public class SpringBootWebApplication {
 
     //Tomcat large file upload connection reset  
     //http://www.mkyong.com/spring/spring-file-upload-and-connection-reset-issue/
-    /*@Bean
+    @Bean
     public TomcatEmbeddedServletContainerFactory tomcatEmbedded() {
 
         TomcatEmbeddedServletContainerFactory tomcat = new TomcatEmbeddedServletContainerFactory();
@@ -27,6 +31,6 @@ public class SpringBootWebApplication {
 
         return tomcat;
 
-    }*/
+    }
 
 }
