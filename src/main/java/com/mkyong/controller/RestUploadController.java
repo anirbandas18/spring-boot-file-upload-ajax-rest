@@ -28,7 +28,7 @@ public class RestUploadController {
 	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile,
 			@RequestParam("fileName") String fileName) throws IOException {
 
-		logger.debug("Single file upload!");
+		logger.info("Single file upload!");
 
 		if (uploadfile.isEmpty()) {
 			return new ResponseEntity<>("please select a file!", HttpStatus.OK);
