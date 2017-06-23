@@ -54,17 +54,19 @@ public class UploadControllerTest {
 	
 	@Test
 	public void shouldReturnFileUploadMetadataWhenBaseDirIsGiven() throws Exception {
-		FileModel fm1 = new FileModel();
-		fm1.setLastModified(System.currentTimeMillis());
-		fm1.setName("file1");
-		fm1.setSize(ThreadLocalRandom.current().nextLong(lower, upper));
-		FileModel fm2 = new FileModel();
-		fm2.setLastModified(System.currentTimeMillis());
-		fm2.setName("file2");
-		fm1.setSize(ThreadLocalRandom.current().nextLong(lower, upper));
 		List<FileModel> filesInBaseDir = new ArrayList<>();
-		filesInBaseDir.add(fm2);
-		filesInBaseDir.add(fm1);
+		int count = 0 ;
+		do {
+			Long n = ThreadLocalRandom.current().nextLong(lower, upper);
+			if(n != null ) {
+				FileModel fm = new FileModel();
+				fm.setLastModified(System.currentTimeMillis());
+				fm.setName("file" + n);
+				fm.setSize(n);
+				filesInBaseDir.add(fm);
+				count++;
+			}
+		} while(count < 2);
 		FileUploadMetadataModel uploadMetadata = new FileUploadMetadataModel();
 		uploadMetadata.setFilesInBaseDir(filesInBaseDir);
 		uploadMetadata.setFileChunkSize(fileChunkSize);
