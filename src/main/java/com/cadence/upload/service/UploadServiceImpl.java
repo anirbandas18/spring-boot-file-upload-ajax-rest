@@ -1,4 +1,4 @@
-package com.mkyong.service;
+package com.cadence.upload.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -9,8 +9,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.slf4j.Logger;
@@ -18,10 +21,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.mkyong.core.CheckSum;
-import com.mkyong.upload.model.FileModel;
+import com.cadence.upload.core.CheckSum;
+import com.cadence.upload.model.FileChunkModel;
+import com.cadence.upload.model.FileModel;
 
 @Component
 public class UploadServiceImpl implements UploadService {
@@ -44,16 +47,15 @@ public class UploadServiceImpl implements UploadService {
 	private CheckSum checkSum;
 	
 	@Override
-	public Boolean saveUploadedFileChunk(MultipartFile fileChunk, String fileName, Integer totalChunks) throws IOException {
+	public Boolean saveUploadedFileChunk(FileChunkModel chunk) throws IOException {
 		// TODO Auto-generated method stub
-		byte[] bytes = fileChunk.getBytes();
-		Path dirPath = Paths.get(uploadLocation, workingDirectory, fileName);
+		Path dirPath = Paths.get(uploadLocation, workingDirectory, chunk.getFileName());
 		Path result = Files.createDirectories(dirPath);
-		Path filePath = Paths.get(result.toString(), fileChunk.getOriginalFilename());
-		Path written = Files.write(filePath, bytes);
+		Path filePath = Paths.get(result.toString(), chunk.getNumber());
+		Path written = Files.write(filePath, chunk.getBytes());
 		logger.info("Saved file chunk " + written.toString());
 		Stream<Path> fileChunks = Files.list(result);
-		Boolean status = fileChunks.count() == totalChunks;
+		Boolean status = fileChunks.count() == chunk.getTotalChunks();
 		fileChunks.close();
 		return status;
 	}
@@ -102,9 +104,40 @@ public class UploadServiceImpl implements UploadService {
 		// TODO Auto-generated method stub
 		Path filePathInProgress = Paths.get(uploadLocation, workingDirectory, fileName);
 		Path filePathCompleted = Paths.get(filePathInProgress.toString(), fileName + fileMergeMarker);
-		String status = Files.exists(filePathInProgress) ? uploadStatus.get(1) 
-				: Files.exists(filePathCompleted) ? uploadStatus.get(2) : uploadStatus.get(0);
+		String status = "";
+		if(Files.exists(filePathInProgress)) {
+			status = uploadStatus.get(1);
+		} else if(Files.exists(filePathCompleted)) {
+			String lastModifiedDate = lastModifieddateOfEntity(filePathCompleted);
+			logger.info(fileName + " uploaded successfully on " + lastModifiedDate);
+			status = uploadStatus.get(2);
+		} else {
+			logger.info(fileName + " not yet uploaded");
+			status = uploadStatus.get(0);
+		}
 		return status;
+	}
+
+	@Override
+	public String lastUploadedChunk(String fileName) throws IOException {
+		// TODO Auto-generated method stub
+		Path filePath = Paths.get(uploadLocation, workingDirectory, fileName);
+		Stream<Path> uploadedFiles = Files.list(filePath);
+		Optional<Path> lastUploaded = uploadedFiles.findFirst();
+		uploadedFiles.close();
+		Path fileChunk = lastUploaded.get();
+		String lastModifiedDate = lastModifieddateOfEntity(fileChunk);
+		logger.info("Last file chunk of " + fileName + " uploaded on " + lastModifiedDate);
+		return fileChunk.getFileName().toString();
+	}
+	
+	private String lastModifieddateOfEntity(Path entity) {
+		File fileOrDir = entity.toFile();
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Date date = new Date();
+		date.setTime(fileOrDir.lastModified());
+		String formattedDate = sdf.format(date);
+		return formattedDate;
 	}
 
 }

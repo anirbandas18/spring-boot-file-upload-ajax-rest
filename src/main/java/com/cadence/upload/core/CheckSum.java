@@ -1,4 +1,4 @@
-package com.mkyong.core;
+package com.cadence.upload.core;
 
 import java.io.FileInputStream;
 import java.io.IOException;

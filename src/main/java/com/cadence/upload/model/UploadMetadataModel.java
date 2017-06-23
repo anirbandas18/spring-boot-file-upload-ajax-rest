@@ -1,4 +1,4 @@
-package com.mkyong.upload.model;
+package com.cadence.upload.model;
 
 import java.util.List;
 

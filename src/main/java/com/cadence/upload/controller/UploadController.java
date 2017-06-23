@@ -1,4 +1,4 @@
-package com.mkyong.controller;
+package com.cadence.upload.controller;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -19,16 +19,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.mkyong.exception.UploadException;
-import com.mkyong.service.UploadService;
-import com.mkyong.upload.model.FileModel;
-import com.mkyong.upload.model.UploadMetadataModel;
-import com.mkyong.upload.model.UploadStatusModel;
+import com.cadence.upload.exception.UploadException;
+import com.cadence.upload.model.FileChunkModel;
+import com.cadence.upload.model.FileModel;
+import com.cadence.upload.model.UploadMetadataModel;
+import com.cadence.upload.model.UploadStatusModel;
+import com.cadence.upload.service.UploadService;
 
 @RestController
 public class UploadController {
 
-	private static final Logger logger = LoggerFactory.getLogger(RestUploadController.class);
+	private static final Logger logger = LoggerFactory.getLogger(UploadController.class);
 
 	@Autowired
 	private UploadService uploadService;
@@ -59,17 +60,31 @@ public class UploadController {
 		ResponseEntity<String> response = new ResponseEntity<>(status, HttpStatus.OK);
 		return response;
 	}
+	
+	@GetMapping("/upload/lastChunk/{fileName}")
+	public ResponseEntity<String> getLastUploadedChunk(@PathVariable String fileName) throws IOException {
+		logger.info("Last uploaded chunk of " + fileName);
+		String fileChunkNumber = uploadService.lastUploadedChunk(fileName);
+		ResponseEntity<String> response = new ResponseEntity<>(fileChunkNumber, HttpStatus.OK);
+		return response;
+	}
 
-	@PostMapping("/upload/fileChunk/{baseDir}/{fileName}/{totalChunks}")
+	@PostMapping("/upload/fileChunk/{fileName}/{totalChunks}/{baseDir}")
 	public UploadStatusModel postFileChunk(@RequestParam("fileChunk") MultipartFile fileChunk, @PathVariable String baseDir, 
 			@PathVariable String fileName, @PathVariable Integer totalChunks) throws IOException, UploadException, NoSuchAlgorithmException {
 		String chunkNumber = fileChunk.getOriginalFilename();
-		logger.info("Uploading chunk number " + chunkNumber + " of file " + fileName);
 		if (fileChunk.isEmpty()) {
 			throw new UploadException("Chunk number " + chunkNumber + " of file " + fileName + " is empty!");
 		} else {
+			byte[] bytes = fileChunk.getBytes();
+			logger.info("Uploading chunk number " + chunkNumber + " of file " + fileName);
+			FileChunkModel chunk = new FileChunkModel();
+			chunk.setBytes(bytes);
+			chunk.setFileName(fileName);
+			chunk.setNumber(chunkNumber);
+			chunk.setTotalChunks(totalChunks);
+			Boolean status = uploadService.saveUploadedFileChunk(chunk);
 			UploadStatusModel uploadStatus = new UploadStatusModel(); 
-			Boolean status = uploadService.saveUploadedFileChunk(fileChunk, fileName, totalChunks);
 			uploadStatus.setMerged(status);
 			if(status) {
 				String md5 = uploadService.mergeUploadedFile(baseDir, fileName);

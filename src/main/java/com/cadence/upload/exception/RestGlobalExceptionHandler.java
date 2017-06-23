@@ -1,4 +1,4 @@
-package com.mkyong.exception;
+package com.cadence.upload.exception;
 
 import javax.servlet.http.HttpServletRequest;
 

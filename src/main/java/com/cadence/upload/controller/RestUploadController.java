@@ -1,4 +1,4 @@
-package com.mkyong.controller;
+package com.cadence.upload.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.mkyong.service.UploadService;
-import com.mkyong.upload.model.FileModel;
-import com.mkyong.upload.model.UploadMetadataModel;
+import com.cadence.upload.model.FileModel;
+import com.cadence.upload.model.UploadMetadataModel;
+import com.cadence.upload.service.UploadService;
 
 @RestController
 public class RestUploadController {
