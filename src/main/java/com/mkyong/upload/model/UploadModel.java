@@ -1,4 +1,4 @@
-package com.mkyong.model;
+package com.mkyong.upload.model;
 
 import java.util.Arrays;
 

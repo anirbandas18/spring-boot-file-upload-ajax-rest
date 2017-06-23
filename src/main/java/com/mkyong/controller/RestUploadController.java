@@ -1,19 +1,22 @@
 package com.mkyong.controller;
 
 import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.mkyong.service.UploadService;
+import com.mkyong.upload.model.FileModel;
+import com.mkyong.upload.model.UploadMetadataModel;
 
 @RestController
 public class RestUploadController {
@@ -22,12 +25,36 @@ public class RestUploadController {
 
 	@Autowired
 	private UploadService uploadService;
+	
+	@Value("${file.chunk.size}")
+	private Integer fileChunkSize;
+	
+	@GetMapping("/upload/metadata")
+	public UploadMetadataModel getUploadMetadata(HttpServletRequest request) throws IOException {
+		HttpSession session = request.getSession();
+		String baseDir = (String) session.getAttribute("baseDir");
+		String client = "";
+		client = request.getHeader("X-FORWARDED-FOR");
+	    client = client == null || "".equals(client) ? request.getRemoteAddr() : client;
+		logger.info("Upload metadata requested by " + client + " for baseDir " + baseDir);
+		List<FileModel> filesInBaseDir = uploadService.getCompletelyUploadedFiles(baseDir);
+		UploadMetadataModel uploadMetadata = new UploadMetadataModel();
+		uploadMetadata.setFilesInBaseDir(filesInBaseDir);
+		uploadMetadata.setFileChunkSize(fileChunkSize);
+		return uploadMetadata;
+	}
+	
+	@GetMapping("upload/status/{fileName}")
+	public void getFileStatus(@PathVariable String fileName) {
+		logger.info("File status of " + fileName);
+		
+	}
 
-	@PostMapping("/upload/single/{fileName}")
+	/*@PostMapping("/upload/fileChunk/{fileName}")
 	// If not @RestController, uncomment this
 	// @ResponseBody
-	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile,
-			@PathVariable("fileName") String fileName) throws IOException {
+	public ResponseEntity<?> postFileChunk(@RequestParam("file") MultipartFile uploadfile,
+			@PathVariable String fileName) throws IOException {
 
 		logger.info("Single file upload!");
 
@@ -37,11 +64,11 @@ public class RestUploadController {
 			logger.info("Selected file : " + fileName);
 		}
 		
-		String paths = uploadService.saveUploadedFileChunks(uploadfile, fileName);
+		String paths = uploadService.saveUploadedFileChunk(uploadfile, fileName);
 
 		return new ResponseEntity<>("Successfully uploaded - " + paths, HttpStatus.OK);
 
-	}
+	}*/
 
 	/*@PostMapping("/upload/multi")
 	public ResponseEntity<?> uploadFileMulti(@RequestParam("files") MultipartFile[] uploadfiles,
