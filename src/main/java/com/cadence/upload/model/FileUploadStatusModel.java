@@ -1,6 +1,6 @@
 package com.cadence.upload.model;
 
-public class UploadStatusModel {
+public class FileUploadStatusModel {
 
 	private Boolean merged;
 	

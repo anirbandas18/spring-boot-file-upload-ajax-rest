@@ -7,14 +7,13 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.cadence.upload.model.FileChunkModel;
+import com.cadence.upload.model.FileChunkUploadStatusModel;
 import com.cadence.upload.model.FileModel;
 
 @Service
 public interface UploadService {
 	
-	public String lastUploadedChunk(String fileName) throws IOException;
-	
-	public String uploadStatusOfFile(String fileName) throws IOException;
+	public FileChunkUploadStatusModel uploadStatusOfFile(String fileName) throws IOException;
 	
 	public List<FileModel> getCompletelyUploadedFiles(String baseDir) throws IOException;
 	

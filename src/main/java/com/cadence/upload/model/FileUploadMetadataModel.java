@@ -2,7 +2,7 @@ package com.cadence.upload.model;
 
 import java.util.List;
 
-public class UploadMetadataModel {
+public class FileUploadMetadataModel {
 
 	private Integer fileChunkSize;
 

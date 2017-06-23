@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cadence.upload.model.FileModel;
-import com.cadence.upload.model.UploadMetadataModel;
+import com.cadence.upload.model.FileUploadMetadataModel;
 import com.cadence.upload.service.UploadService;
 
 @RestController
@@ -30,7 +30,7 @@ public class RestUploadController {
 	private Integer fileChunkSize;
 	
 	@GetMapping("/upload/metadata")
-	public UploadMetadataModel getUploadMetadata(HttpServletRequest request) throws IOException {
+	public FileUploadMetadataModel getUploadMetadata(HttpServletRequest request) throws IOException {
 		HttpSession session = request.getSession();
 		String baseDir = (String) session.getAttribute("baseDir");
 		String client = "";
@@ -38,7 +38,7 @@ public class RestUploadController {
 	    client = client == null || "".equals(client) ? request.getRemoteAddr() : client;
 		logger.info("Upload metadata requested by " + client + " for baseDir " + baseDir);
 		List<FileModel> filesInBaseDir = uploadService.getCompletelyUploadedFiles(baseDir);
-		UploadMetadataModel uploadMetadata = new UploadMetadataModel();
+		FileUploadMetadataModel uploadMetadata = new FileUploadMetadataModel();
 		uploadMetadata.setFilesInBaseDir(filesInBaseDir);
 		uploadMetadata.setFileChunkSize(fileChunkSize);
 		return uploadMetadata;

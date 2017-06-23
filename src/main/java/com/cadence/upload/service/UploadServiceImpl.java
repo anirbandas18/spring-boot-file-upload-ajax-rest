@@ -14,7 +14,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import org.slf4j.Logger;
@@ -24,6 +23,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
 import com.cadence.upload.model.FileChunkModel;
+import com.cadence.upload.model.FileChunkUploadStatusModel;
 import com.cadence.upload.model.FileModel;
 
 @Component
@@ -31,6 +31,9 @@ public class UploadServiceImpl implements UploadService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(UploadServiceImpl.class);
 
+	@Value("${file.chunk.size}")
+	private Integer fileChunkSize;
+	
 	@Value("${file.storage.location}")
 	private String uploadLocation;
 	
@@ -51,9 +54,9 @@ public class UploadServiceImpl implements UploadService {
 		Path filePath = Paths.get(result.toString(), chunk.getNumber());
 		Path written = Files.write(filePath, chunk.getBytes());
 		logger.info("Saved file chunk " + written.toString());
-		Stream<Path> fileChunks = Files.list(result);
-		Boolean status = fileChunks.count() == chunk.getTotalChunks();
-		fileChunks.close();
+		//https://www.quora.com/What-are-some-mistakes-you-can-make-as-a-programmer-that-will-get-you-fired-immediately
+		result = Files.createDirectories(dirPath);
+		Boolean status = result.getNameCount() == chunk.getTotalChunks();
 		return status;
 	}
 
@@ -69,11 +72,10 @@ public class UploadServiceImpl implements UploadService {
 		ByteArrayOutputStream memory = new ByteArrayOutputStream();
 		for(Path filePath : fileChunkPaths) {
 			byte[] b = Files.readAllBytes(filePath);
-			file.write(b, off, b.length);
 			memory.write(b, off, b.length);
 			off = b.length;
 		}
-		file.flush();
+		file.write(memory.toByteArray());
 		file.close();
 		Path renamedPath = Files.move(source, source.resolveSibling(newDirPath));
 		logger.info("Uploaded file to " + renamedPath.toString());
@@ -99,38 +101,34 @@ public class UploadServiceImpl implements UploadService {
 	}
 
 	@Override
-	public String uploadStatusOfFile(String fileName) throws IOException {
+	public FileChunkUploadStatusModel uploadStatusOfFile(String fileName) throws IOException {
 		// TODO Auto-generated method stub
+		FileChunkUploadStatusModel fcusm = new FileChunkUploadStatusModel();
 		Path filePathInProgress = Paths.get(uploadLocation, workingDirectory, fileName);
 		Path filePathCompleted = Paths.get(filePathInProgress.toString(), fileName + fileMergeMarker);
-		String status = "";
 		if(Files.exists(filePathInProgress)) {
-			status = uploadStatus.get(1);
+			fcusm.setStatus(uploadStatus.get(2));
+			int numberOfChunksCompleted = filePathInProgress.getNameCount();
+			Long bytesUploaded = new Long(numberOfChunksCompleted * fileChunkSize);
+			fcusm.setBytesUploaded(bytesUploaded);
 		} else if(Files.exists(filePathCompleted)) {
-			String lastModifiedDate = lastModifieddateOfEntity(filePathCompleted);
+			String lastModifiedDate = lastModifiedDateOfEntity(filePathCompleted);
 			logger.info(fileName + " uploaded successfully on " + lastModifiedDate);
-			status = uploadStatus.get(2);
+			fcusm.setStatus(uploadStatus.get(2));
+			int numberOfChunksCompleted = filePathCompleted.getNameCount();
+			Long bytesUploaded = new Long((numberOfChunksCompleted - 1) * fileChunkSize);
+			Stream<Path> uploadedFileChunks = Files.list(filePathCompleted);
+			bytesUploaded += uploadedFileChunks.findFirst().get().toFile().length();
+			uploadedFileChunks.close();
+			fcusm.setBytesUploaded(bytesUploaded);
 		} else {
-			logger.info(fileName + " not yet uploaded");
-			status = uploadStatus.get(0);
+			logger.info(fileName+ " not yet uploaded");
+			fcusm.setStatus(uploadStatus.get(0));
 		}
-		return status;
-	}
-
-	@Override
-	public String lastUploadedChunk(String fileName) throws IOException {
-		// TODO Auto-generated method stub
-		Path filePath = Paths.get(uploadLocation, workingDirectory, fileName);
-		Stream<Path> uploadedFiles = Files.list(filePath);
-		Optional<Path> lastUploaded = uploadedFiles.findFirst();
-		uploadedFiles.close();
-		Path fileChunk = lastUploaded.get();
-		String lastModifiedDate = lastModifieddateOfEntity(fileChunk);
-		logger.info("Last file chunk of " + fileName + " uploaded on " + lastModifiedDate);
-		return fileChunk.getFileName().toString();
+		return fcusm;
 	}
 	
-	private String lastModifieddateOfEntity(Path entity) {
+	private String lastModifiedDateOfEntity(Path entity) {
 		File fileOrDir = entity.toFile();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
 		Date date = new Date();
