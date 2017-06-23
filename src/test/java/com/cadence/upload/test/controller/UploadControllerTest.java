@@ -28,7 +28,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(UploadController.class)
-@TestPropertySource("classpath:test.properties")
+@TestPropertySource("classpath:application-test.properties")
 public class UploadControllerTest {
 	
 	@Autowired
