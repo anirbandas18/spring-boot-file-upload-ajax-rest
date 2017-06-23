@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,16 +23,18 @@ public class RestUploadController {
 	@Autowired
 	private UploadService uploadService;
 
-	@PostMapping("/upload/single")
+	@PostMapping("/upload/single/{fileName}")
 	// If not @RestController, uncomment this
 	// @ResponseBody
 	public ResponseEntity<?> uploadFile(@RequestParam("file") MultipartFile uploadfile,
-			@RequestParam("fileName") String fileName) throws IOException {
+			@PathVariable("fileName") String fileName) throws IOException {
 
 		logger.info("Single file upload!");
 
 		if (uploadfile.isEmpty()) {
 			return new ResponseEntity<>("please select a file!", HttpStatus.OK);
+		} else {
+			logger.info("Selected file : " + fileName);
 		}
 		
 		String paths = uploadService.saveUploadedFileChunks(uploadfile, fileName);
