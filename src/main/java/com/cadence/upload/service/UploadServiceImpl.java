@@ -1,5 +1,6 @@
 package com.cadence.upload.service;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -18,11 +19,10 @@ import java.util.stream.Stream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 
-import com.cadence.upload.core.CheckSum;
 import com.cadence.upload.model.FileChunkModel;
 import com.cadence.upload.model.FileModel;
 
@@ -42,9 +42,6 @@ public class UploadServiceImpl implements UploadService {
 	
 	@Value("#{'${upload.status}'.split(',')}")
 	private List<String> uploadStatus;
-	
-	@Autowired
-	private CheckSum checkSum;
 	
 	@Override
 	public Boolean saveUploadedFileChunk(FileChunkModel chunk) throws IOException {
@@ -66,19 +63,21 @@ public class UploadServiceImpl implements UploadService {
 		Path target = Paths.get(uploadLocation, baseDir, fileName);
 		Path source = Paths.get(uploadLocation, workingDirectory, fileName);
 		Path newDirPath = Paths.get(source.toString() + fileMergeMarker);
-		DirectoryStream<Path> fileChunks = Files.newDirectoryStream(source);
-		OutputStream os = new FileOutputStream(target.toString());
+		DirectoryStream<Path> fileChunkPaths = Files.newDirectoryStream(source);
+		OutputStream file = new FileOutputStream(target.toString());
 		int off = 0;
-		for(Path filePath : fileChunks) {
+		ByteArrayOutputStream memory = new ByteArrayOutputStream();
+		for(Path filePath : fileChunkPaths) {
 			byte[] b = Files.readAllBytes(filePath);
-			os.write(b, off, b.length);
+			file.write(b, off, b.length);
+			memory.write(b, off, b.length);
 			off = b.length;
 		}
-		os.flush();
-		os.close();
+		file.flush();
+		file.close();
 		Path renamedPath = Files.move(source, source.resolveSibling(newDirPath));
 		logger.info("Uploaded file to " + renamedPath.toString());
-		String md5 = checkSum.generate(target.toString());
+		String md5 = DigestUtils.md5DigestAsHex(memory.toByteArray());
 		return md5;
 	}
 
