@@ -3,13 +3,15 @@ package com.cadence.upload.test.model;
 import java.util.List;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.stereotype.Component;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.test.context.TestPropertySource;
 
-@Component
+@Configuration
 @TestPropertySource("classpath:file-upload-test.properties")
-@ConfigurationProperties
-public class UploadTestModel {
+@EnableConfigurationProperties
+@ConfigurationProperties(prefix = "fut")
+public class UploadTestProperties {
 	
 	private Long fileChunkSize;
 	
