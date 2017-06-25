@@ -57,7 +57,7 @@ public class UploadControllerPositiveTest {
 				.andExpect(content().json(jsonString));
 	}
 
-	//@Test
+	@Test
 	public void shouldReturnFileStatusWhenFileUploadYetTBD() throws Exception {
 		FileUpload fu = testModel.getFiles().get(0);
 		FileChunkUploadStatusModel uploadStatus = fileUploadStatus(fu);
@@ -67,7 +67,7 @@ public class UploadControllerPositiveTest {
 				.andExpect(content().json(jsonString));
 	}
 
-	//@Test
+	@Test
 	public void shouldReturnFileStatusWhenFileUploadIsCompleted() throws Exception {
 		FileUpload fu = testModel.getFiles().get(2);
 		FileChunkUploadStatusModel uploadStatus = fileUploadStatus(fu);
@@ -77,7 +77,7 @@ public class UploadControllerPositiveTest {
 				.andExpect(content().json(jsonString));
 	}
 
-	//@Test
+	@Test
 	public void shouldReturnFileStatusWhenFileUploadInProgress() throws Exception {
 		FileUpload fu = testModel.getFiles().get(1);
 		FileChunkUploadStatusModel uploadStatus = fileUploadStatus(fu);
