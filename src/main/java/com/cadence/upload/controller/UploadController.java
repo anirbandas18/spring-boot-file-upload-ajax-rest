@@ -48,11 +48,11 @@ public class UploadController {
 		List<FileModel> filesInBaseDir = uploadService.getCompletelyUploadedFiles(baseDir);
 		FileUploadMetadataModel uploadMetadata = new FileUploadMetadataModel();
 		uploadMetadata.setFilesInBaseDir(filesInBaseDir);
-		uploadMetadata.setFileChunkSize(fileChunkSize);
+		uploadMetadata.setFileChunkSize(new Long(fileChunkSize));
 		return uploadMetadata;
 	}
 
-	@GetMapping("upload/status/{fileName}")
+	@GetMapping("/upload/status/{fileName}")
 	public FileChunkUploadStatusModel getFileStatus(@PathVariable String fileName) throws IOException {
 		logger.info("Upload status of " + fileName);
 		FileChunkUploadStatusModel fcusm = uploadService.uploadStatusOfFile(fileName);

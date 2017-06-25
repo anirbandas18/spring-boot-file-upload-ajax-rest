@@ -4,15 +4,15 @@ import java.util.List;
 
 public class FileUploadMetadataModel {
 
-	private Integer fileChunkSize;
+	private Long fileChunkSize;
 
 	private List<FileModel> filesInBaseDir;
 
-	public Integer getFileChunkSize() {
+	public Long getFileChunkSize() {
 		return fileChunkSize;
 	}
 
-	public void setFileChunkSize(Integer fileChunkSize) {
+	public void setFileChunkSize(Long fileChunkSize) {
 		this.fileChunkSize = fileChunkSize;
 	}
 

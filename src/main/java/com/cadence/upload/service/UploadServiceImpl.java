@@ -43,7 +43,7 @@ public class UploadServiceImpl implements UploadService {
 	@Value("${file.merge.marker}")
 	private String fileMergeMarker;
 	
-	@Value("#{'${upload.status}'.split(',')}")
+	@Value("#{'${file.upload.status}'.split(',')}")
 	private List<String> uploadStatus;
 	
 	@Override
@@ -124,6 +124,7 @@ public class UploadServiceImpl implements UploadService {
 		} else {
 			logger.info(fileName+ " not yet uploaded");
 			fcusm.setStatus(uploadStatus.get(0));
+			fcusm.setBytesUploaded(0L);
 		}
 		return fcusm;
 	}
