@@ -8,7 +8,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -89,15 +88,12 @@ public class UploadControllerPositiveTest {
 
 	private List<FileModel> fileModelDataset() {
 		List<FileModel> filesInBaseDir = new ArrayList<>();
-		for (int i = 0; filesInBaseDir.size() != 2; i++) {
-			Long n = ThreadLocalRandom.current().nextLong(testModel.getLower(), testModel.getUpper());
-			if (n != null) {
-				FileModel fm = new FileModel();
-				fm.setLastModified(System.currentTimeMillis());
-				fm.setName("file" + i);
-				fm.setSize(n);
-				filesInBaseDir.add(fm);
-			}
+		for(FileUpload fu : testModel.getFiles()) {
+			FileModel fm = new FileModel();
+			fm.setLastModified(System.currentTimeMillis());
+			fm.setName(fu.getName());
+			fm.setSize(fu.getBytes());
+			filesInBaseDir.add(fm);
 		}
 		return filesInBaseDir;
 	}

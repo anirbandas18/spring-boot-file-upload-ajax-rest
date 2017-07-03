@@ -16,10 +16,6 @@ public class UploadTestProperties {
 	private Long fileChunkSize;
 	
 	private String baseDir;
-	
-	private Long lower;
-	
-	private Long upper;
 
 	public static class FileUpload {
 		
@@ -76,22 +72,6 @@ public class UploadTestProperties {
 
 	public void setBaseDir(String baseDir) {
 		this.baseDir = baseDir;
-	}
-
-	public Long getLower() {
-		return lower;
-	}
-
-	public void setLower(Long lower) {
-		this.lower = lower;
-	}
-
-	public Long getUpper() {
-		return upper;
-	}
-
-	public void setUpper(Long upper) {
-		this.upper = upper;
 	}
 
 	public List<FileUpload> getFiles() {
