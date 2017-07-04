@@ -9,16 +9,47 @@
 	rel="stylesheet"
 	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
 	crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+	crossorigin="anonymous"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"
+	integrity="sha256-zBy1l2WBAh2vPF8rnjFMUXujsfkKjya0Jy5j6yKj0+Q="
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"
+	integrity="sha256-E6XubcgT4a601977ZZP4Yw/0UCB2/Ex+Bazst+JRw1U="
+	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="container-fluid">
-		<h1>My First Bootstrap Page</h1>
-		<p>This is some text.</p>
-	</div>
-
+	<fieldset class="container">
+		<legend>File List</legend>
+		<div class="btn-group">
+			<button type="button" class="btn btn-success">Start</button>
+			<button type="button" class="btn btn-warning">Stop</button>
+			<button type="button" class="btn btn-danger">Delete</button>
+		</div>
+		<div class="row">
+			<div class="col-xs-1 col-sm-1 col-md-1">
+				<label>#</label>
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4">
+				<label>Name</label>
+			</div>
+			<div class="col-xs-4 col-sm-4 col-md-4">
+				<label>Status</label>
+			</div>
+			<div class="col-xs-1 col-sm-1 col-md-1">
+				<label>Size</label>
+			</div>
+			<div class="col-xs-2 col-sm-2 col-md-2">
+				<label>Uploaded On</label>
+			</div>
+		</div>
+	</fieldset>
 </body>
 </html>
