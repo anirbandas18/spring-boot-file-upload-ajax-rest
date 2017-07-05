@@ -36,8 +36,11 @@
 		<!-- baseDir will be in panel heading -->
 		<div class="panel-body">
 			<div ng-controller="uploadcontroller">
-				<input id="file" type="file"
-					class="pull-left input-xs input-sm input-md" name="file">
+				<!-- <input id="file" type="file"
+					class="pull-left input-xs input-sm input-md" name="file"> -->
+				<label class="btn btn-info btn-file"> Add 
+					<input type="file" style="display: none;">
+				</label>
 				<div class="btn-group btn-md btn-sm btn-xs">
 					<button type="button" class="btn btn-success">Start</button>
 					<button type="button" class="btn btn-warning disabled">Stop</button>
