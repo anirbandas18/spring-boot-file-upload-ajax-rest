@@ -15,35 +15,3 @@ $(document).ready(function() {
 			}
 		});
 });
-
-/*function loadFile(file) {
-	var fileChunkSize = 1000002;
-	for (var offset = 0, partNo = 0 ; offset < file.size ; offset += fileChunkSize, partNo++) {
-		var blob = file.slice(offset, offset + fileChunkSize,  "{type: 'text/plain'}");
-		var formData = new FormData();
-		formData.append("fileName", file.name);
-		formData.append("file", blob, partNo);
-		uploadFile(formData);
-	}
-}
-
-function uploadFile(formData) {
-	$.ajax({
-		type : "POST",
-		enctype : 'multipart/form-data',
-		url : "/upload/single",
-		data : formData,
-		processData : false, //prevent jQuery from automatically transforming the data into a query string
-		contentType : false,
-		cache : false,
-		timeout : 0,
-		success : function(data) {
-			$("#result").text(data);
-			console.log("SUCCESS : ", data);
-		},
-		error : function(e) {
-			$("#result").text(e.responseText);
-			console.log("ERROR : ", e);
-		}
-	});
-}*/
