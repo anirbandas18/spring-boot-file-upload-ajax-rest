@@ -1,7 +1,15 @@
 @CHARSET "ISO-8859-1";
-.table > tbody > tr > td {
-    vertical-align: middle !important;
+
+.parent {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
 }
-.table > tbody > tr > td > .progress {
-    margin-bottom: 0px !important;
+
+.table>tbody>tr>td {
+	vertical-align: middle !important;
+}
+
+.table>tbody>tr>td>.progress {
+	margin-bottom: 0px !important;
 }
