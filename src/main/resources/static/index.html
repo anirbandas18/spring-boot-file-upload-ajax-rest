@@ -28,11 +28,14 @@
 <body>
 	<fieldset class="container">
 		<legend>File List</legend>
-		<div class="btn-group">
+		<input id="file" type="file" class="pull-left input-xs input-sm input-md" name="file">
+		<div class="btn-group btn-md btn-sm btn-xs">
 			<button type="button" class="btn btn-success">Start</button>
-			<button type="button" class="btn btn-warning">Stop</button>
+			<button type="button" class="btn btn-warning disabled">Stop</button>
 			<button type="button" class="btn btn-danger">Delete</button>
 		</div>
+		<br>
+		<br>
 		<div class="row">
 			<div class="col-xs-1 col-sm-1 col-md-1">
 				<label>#</label>
