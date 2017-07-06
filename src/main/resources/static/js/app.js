@@ -9,3 +9,7 @@ app.config(function($locationProvider) {
 		requireBase : false
 	});
 });
+
+app.run(function($rootScope) {
+	
+});

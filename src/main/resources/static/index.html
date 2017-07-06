@@ -76,11 +76,11 @@
 									class="fa fa-fw fa-sort-asc"></i><i
 									ng-show="propertyName === 'size' && reverse === true"
 									class="fa fa-fw fa-sort-desc"></i></th>
-								<th class="col-xs-2" ng-click="orderByField('uploadedOn')">Uploaded
+								<th class="col-xs-2" ng-click="orderByField('lastModified')">Uploaded
 									On<i
-									ng-show="propertyName === 'uploadedOn' && reverse === false"
+									ng-show="propertyName === 'lastModified' && reverse === false"
 									class="fa fa-fw fa-sort-asc"></i><i
-									ng-show="propertyName === 'uploadedOn' && reverse === true"
+									ng-show="propertyName === 'lastModified' && reverse === true"
 									class="fa fa-fw fa-sort-desc"></i></i>
 								</th>
 							</tr>
@@ -102,7 +102,7 @@
 								</td>
 								<td class="col-xs-1">{{ file.status | translateStatus }}</td>
 								<td class="col-xs-1">{{ file.size | formatFileSize }}</td>
-								<td class="col-xs-2">{{ file.uploadedOn | date:'yyyy-MM-dd
+								<td class="col-xs-2">{{ file.lastModified | date:'yyyy-MM-dd
 									HH:mm:ss' }}</td>
 							</tr>
 						</tbody>
