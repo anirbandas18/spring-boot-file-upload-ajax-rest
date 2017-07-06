@@ -54,23 +54,39 @@
 						class="table table-condensed table-hover table-xs table-sm table-md">
 						<thead class="thead-default">
 							<tr class="hover-hand">
-								<th class="col-xs-1">#</th>
+								<th class="col-xs-1" ng-click="orderByField('index')">#</th>
 								<th class="col-xs-4" ng-click="orderByField('name')">Name <i
-									class="fa fa-fw fa-sort"></i></th>
+									ng-show="propertyName === 'name' && reverse === false"
+									class="fa fa-fw fa-sort-asc"></i><i
+									ng-show="propertyName === 'name' && reverse === true"
+									class="fa fa-fw fa-sort-desc"></i></th>
 								<th class="col-xs-3" ng-click="orderByField('progress')">Progress<i
-									class="fa fa-fw fa-sort"></i></th>
+									ng-show="propertyName === 'progress' && reverse === false"
+									class="fa fa-fw fa-sort-asc"></i><i
+									ng-show="propertyName === 'progress' && reverse === true"
+									class="fa fa-fw fa-sort-desc"></i></th>
 								<th class="col-xs-1" ng-click="orderByField('status')">Status<i
-									class="fa fa-fw fa-sort"></i></th>
+									ng-show="propertyName === 'status' && reverse === false"
+									class="fa fa-fw fa-sort-asc"></i><i
+									ng-show="propertyName === 'status' && reverse === true"
+									class="fa fa-fw fa-sort-desc"></i></th>
 								<th class="col-xs-1" ng-click="orderByField('size')">Size<i
-									class="fa fa-fw fa-sort"></i></th>
+									ng-show="propertyName === 'size' && reverse === false"
+									class="fa fa-fw fa-sort-asc"></i><i
+									ng-show="propertyName === 'size' && reverse === true"
+									class="fa fa-fw fa-sort-desc"></i></th>
 								<th class="col-xs-2" ng-click="orderByField('uploadedOn')">Uploaded
-									On<i class="fa fa-fw fa-sort"></i>
+									On<i
+									ng-show="propertyName === 'uploadedOn' && reverse === false"
+									class="fa fa-fw fa-sort-asc"></i><i
+									ng-show="propertyName === 'uploadedOn' && reverse === true"
+									class="fa fa-fw fa-sort-desc"></i></i>
 								</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr
-								ng-repeat="file in fileList | orderBy : customField : reverseSort"
+								ng-repeat="file in fileList | orderBy : propertyName : reverse"
 								scope="row" class="clickable-row" ng-click="selectRow(file)">
 								<td class="col-xs-1">{{ $index + 1 }}</td>
 								<td class="col-xs-4">{{ file.name }}</td>
