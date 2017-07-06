@@ -29,6 +29,5 @@ app.controller('uploadcontroller', function($location, $scope, $window) {
 	}
 	var map = $location.search();
 	sessionStorage.setItem('baseDir', map.baseDir);
-	console.log(sessionStorage.getItem('baseDir'));
-	console.log();
+	$scope.baseDir = sessionStorage.getItem('baseDir');
 });
