@@ -55,7 +55,7 @@
 						<thead class="thead-default">
 							<tr class="hover-hand">
 								<th class="col-xs-1">#</th>
-								<th class="col-xs-4" ng-click="orderByField('name')">Name<i
+								<th class="col-xs-4" ng-click="orderByField('name')">Name <i
 									class="fa fa-fw fa-sort"></i></th>
 								<th class="col-xs-3" ng-click="orderByField('progress')">Progress<i
 									class="fa fa-fw fa-sort"></i></th>
@@ -69,7 +69,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr ng-repeat="file in fileList | orderBy : customField"
+							<tr
+								ng-repeat="file in fileList | orderBy : customField : reverseSort"
 								scope="row" class="clickable-row">
 								<td class="col-xs-1">{{ $index + 1 }}</td>
 								<td class="col-xs-4">{{ file.name }}</td>

@@ -24,8 +24,10 @@ app.controller('uploadcontroller', function($location, $scope, $window) {
 		uploadedOn : Date.now()
 	};
 	$scope.fileList = [ file1, file2, file3 ];
+	$scope.reverseSort = false;
 	$scope.orderByField = function(x) {
 		$scope.customField = x;
+		$scope.reverseSort = !$scope.reverseSort;
 	}
 	var map = $location.search();
 	sessionStorage.setItem('baseDir', map.baseDir);
