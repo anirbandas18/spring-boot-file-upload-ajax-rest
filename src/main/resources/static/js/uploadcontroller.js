@@ -29,6 +29,9 @@ app.controller('uploadcontroller', function($location, $scope, $window) {
 		$scope.customField = x;
 		$scope.reverseSort = !$scope.reverseSort;
 	}
+	$scope.selectRow = function(file) {
+		console.log(file.name);
+	};
 	var map = $location.search();
 	sessionStorage.setItem('baseDir', map.baseDir);
 	$scope.baseDir = sessionStorage.getItem('baseDir');

@@ -71,7 +71,7 @@
 						<tbody>
 							<tr
 								ng-repeat="file in fileList | orderBy : customField : reverseSort"
-								scope="row" class="clickable-row">
+								scope="row" class="clickable-row" ng-click="selectRow(file)">
 								<td class="col-xs-1">{{ $index + 1 }}</td>
 								<td class="col-xs-4">{{ file.name }}</td>
 								<td class="col-xs-3">
