@@ -6,7 +6,7 @@ app.controller('uploadcontroller', function($location, $scope, $window) {
 		name : "Introduction to R programming.mp4",
 		progress : 25,
 		status : "InProgress",
-		size : 4868728,
+		size : 4868729,
 		uploadedOn : Date.now()
 	};
 	var file2 = {
