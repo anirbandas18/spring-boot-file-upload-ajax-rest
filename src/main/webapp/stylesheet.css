@@ -1,7 +1,0 @@
-@CHARSET "ISO-8859-1";
-.table > tbody > tr > td {
-    vertical-align: middle !important;
-}
-.table > tbody > tr > td > .progress {
-    margin-bottom: 0px !important;
-}
