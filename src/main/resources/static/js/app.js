@@ -3,6 +3,13 @@
  */
 var app = angular.module('app', []);
 
+app.config(function($locationProvider) {
+	$locationProvider.html5Mode({
+		enabled : true,
+		requireBase : false
+	});
+});
+
 app.filter('formatFileSize', function() {
 	return function(bytes) {
 		var sizes = [ 'Bytes', 'KB', 'MB', 'GB', 'TB' ];
@@ -37,7 +44,7 @@ app.filter('translateStatus', function() {
 		case 'Completed':
 			translation = "Finished";
 			break;
-		default :
+		default:
 			translation = "Stopped";
 			break;
 		}

@@ -30,56 +30,60 @@
 <script type="text/javascript" src="js/uploadcontroller.js"></script>
 <link href="css/stylesheet.css" rel="stylesheet" type="text/css">
 </head>
-<body class="container" ng-app="app">
-	<div class="panel panel-default">
-		<div class="panel-heading">File List</div>
-		<!-- baseDir will be in panel heading -->
-		<div class="panel-body">
-			<div ng-controller="uploadcontroller">
-				<!-- <input id="file" type="file"
+<body class="vertical-center" ng-app="app">
+	<div class="container">
+		<div class="panel panel-default">
+			<div class="panel-heading">File List</div>
+			<!-- baseDir will be in panel heading -->
+			<div class="panel-body">
+				<div ng-controller="uploadcontroller">
+					<!-- <input id="file" type="file"
 					class="pull-left input-xs input-sm input-md" name="file"> -->
-				<label class="btn btn-info btn-file"> Add 
-					<input type="file" style="display: none;">
-				</label>
-				<div class="btn-group btn-md btn-sm btn-xs">
-					<button type="button" class="btn btn-success">Start</button>
-					<button type="button" class="btn btn-warning disabled">Stop</button>
-					<button type="button" class="btn btn-danger">Delete</button>
-				</div>
-				<br> <br>
-				<div class="table-responsive">
-					<table
-						class="table table-condensed table-hover table-xs table-sm table-md">
-						<thead class="thead-default">
-							<tr>
-								<th class="col-xs-1">#</th>
-								<th class="col-xs-4">Name</th>
-								<th class="col-xs-3">Progress</th>
-								<th class="col-xs-1">Status</th>
-								<th class="col-xs-1">Size</th>
-								<th class="col-xs-2">Uploaded On</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="file in fileList" scope="row">
-								<td class="col-xs-1">{{ $index + 1 }}</td>
-								<td class="col-xs-4">{{ file.name }}</td>
-								<td class="col-xs-3">
-									<div class="progress">
-										<div class="progress-bar bg-success" role="progressbar"
-											style="width: {{ file.progress | progressPercentage }}"
-											aria-valuenow="{{ file.progress }}" aria-valuemin="0"
-											aria-valuemax="100">{{ file.progress |
-											progressPercentage }}</div>
-									</div>
-								</td>
-								<td class="col-xs-1">{{ file.status | translateStatus }}</td>
-								<td class="col-xs-1">{{ file.size | formatFileSize }}</td>
-								<td class="col-xs-2">{{ file.uploadedOn | date:'yyyy-MM-dd
-									HH:mm:ss' }}</td>
-							</tr>
-						</tbody>
-					</table>
+					<label class="btn btn-info btn-file"> Add <input
+						type="file" style="display: none;">
+					</label>
+					<div class="btn-group btn-md btn-sm btn-xs">
+						<button type="button" class="btn btn-success">Start</button>
+						<button type="button" class="btn btn-warning disabled">Stop</button>
+						<button type="button" class="btn btn-danger">Delete</button>
+					</div>
+					<br> <br>
+					<div class="table-responsive">
+						<table
+							class="table table-condensed table-hover table-xs table-sm table-md">
+							<thead class="thead-default">
+								<tr>
+									<th class="col-xs-1" ng-click="orderByField('index')">#</th>
+									<th class="col-xs-4" ng-click="orderByField('name')">Name</th>
+									<th class="col-xs-3" ng-click="orderByField('progress')">Progress</th>
+									<th class="col-xs-1" ng-click="orderByField('status')">Status</th>
+									<th class="col-xs-1" ng-click="orderByField('size')">Size</th>
+									<th class="col-xs-2" ng-click="orderByField('uploadedOn')">Uploaded
+										On</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr ng-repeat="file in fileList | orderBy : customField"
+									scope="row" class="clickable-row">
+									<td class="col-xs-1">{{ $index + 1 }}</td>
+									<td class="col-xs-4">{{ file.name }}</td>
+									<td class="col-xs-3">
+										<div class="progress">
+											<div class="progress-bar bg-success" role="progressbar"
+												style="width: {{ file.progress | progressPercentage }}"
+												aria-valuenow="{{ file.progress }}" aria-valuemin="0"
+												aria-valuemax="100">{{ file.progress |
+												progressPercentage }}</div>
+										</div>
+									</td>
+									<td class="col-xs-1">{{ file.status | translateStatus }}</td>
+									<td class="col-xs-1">{{ file.size | formatFileSize }}</td>
+									<td class="col-xs-2">{{ file.uploadedOn | date:'yyyy-MM-dd
+										HH:mm:ss' }}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</div>
 		</div>
