@@ -1,8 +1,7 @@
 /**
  * 
  */
-app
-		.controller(
+app.controller(
 				'uploadcontroller',
 				function($location, $scope, $window) {
 					var file1 = {
