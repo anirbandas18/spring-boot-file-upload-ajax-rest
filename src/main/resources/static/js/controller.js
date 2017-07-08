@@ -2,12 +2,11 @@
  * 
  */
 app.controller('indexcontroller', function($scope, $location){
-	/*sessionStorage.setItem('baseDir', $scope.baseDir);
-	$scope.changeView = function(viewName) {
-		var url = "/" + viewName + "/" + sessionStorage.getItem('baseDir');
-		console.log(url);
-		$location.path(url); 
-	}*/
+	$scope.go = function(path) {
+		sessionStorage.setItem('baseDir', $scope.baseDir);
+		console.log(sessionStorage.getItem('baseDir'));
+		$location.path(path);
+	};
 });
 
 app.controller('uploadcontroller',

@@ -3,7 +3,6 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Index</title>
 <!-- libraries -->
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -43,9 +42,9 @@
 								<input type="radio">
 							</span>
 							<span class="input-group-addon">File Upload</span>
-							<input placeholder="baseDir" type="text" class="form-control" ng-model="baseDir">
+							<input placeholder="baseDir" type="text" class="form-control" ng-model="baseDir" value="case101">
 							<span class="input-group-btn">
-								<a class="btn btn-success" href="fileUpload/{{ baseDir }}">Go!</a>
+								<button class="btn btn-success" ng-click="go('fileupload')">Go!</button>
 							</span>
 						</div>
 					</div>
