@@ -1,7 +1,7 @@
 /**
  * 
  */
-app.controller('indexcontroller', function($scope, $location){
+app.controller('operationscontroller', function($scope, $location){
 	$scope.go = function(path) {
 		sessionStorage.setItem('baseDir', $scope.baseDir);
 		console.log(sessionStorage.getItem('baseDir'));
@@ -9,7 +9,7 @@ app.controller('indexcontroller', function($scope, $location){
 	};
 });
 
-app.controller('uploadcontroller',
+app.controller('fileuploadcontroller',
 				function($scope) {
 					var file1 = {
 						name : "Introduction to R programming.mp4",

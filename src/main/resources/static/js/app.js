@@ -11,10 +11,11 @@ app.config(function($locationProvider, $routeProvider) {
 	$routeProvider.when("/fileupload", {
 		title : 'File Upload',
 		templateUrl : "view/fileupload.html",
-		controller : 'uploadcontroller'
-	}).otherwise({
+		controller : 'fileuploadcontroller'
+	}).when("/", {
 		title : 'Index',
-		redirectTo : 'index.html'
+		templateUrl : 'view/operations.html',
+		controller : 'operationscontroller'
 	});
 });
 // dynamic page title change

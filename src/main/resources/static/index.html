@@ -30,28 +30,5 @@
 </head>
 <body class="vertical-center" ng-app="app">
 	<div ng-view></div>
-	<div class="container" ng-controller="indexcontroller">
-		<div class="panel panel-default">
-			<div class="panel-heading">Index of operations</div>
-			<div class="panel-body">
-				<div class="row">
-					<div class="col-xs-3"></div>
-					<div class="col-xs-6">
-						<div class="input-group">
-							<span class="input-group-addon">
-								<input type="radio">
-							</span>
-							<span class="input-group-addon">File Upload</span>
-							<input placeholder="baseDir" type="text" class="form-control" ng-model="baseDir" value="case101">
-							<span class="input-group-btn">
-								<button class="btn btn-success" ng-click="go('fileupload')">Go!</button>
-							</span>
-						</div>
-					</div>
-					<div class="col-xs-3"></div>
-				</div>
-			</div>
-		</div>
-	</div>
 </body>
 </html>
