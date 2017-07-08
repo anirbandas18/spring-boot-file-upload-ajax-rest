@@ -2,7 +2,7 @@
  * 
  */
 app.controller('uploadcontroller',
-				function($location, $scope, $window) {
+				function($scope) {
 					var file1 = {
 						name : "Introduction to R programming.mp4",
 						progress : 25,
@@ -35,7 +35,7 @@ app.controller('uploadcontroller',
 					$scope.selectRow = function(file) {
 						console.log(file.name);
 					};
-					var map = $location.search();
-					sessionStorage.setItem('baseDir', map.baseDir);
+					/*var map = $location.search();
+					sessionStorage.setItem('baseDir', map.baseDir);*/
 					$scope.baseDir = sessionStorage.getItem('baseDir');
 				});
