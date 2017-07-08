@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>File Upload</title>
+<title>Index</title>
 <!-- libraries -->
 <link
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
@@ -11,13 +11,17 @@
 <link
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
 	rel="stylesheet" crossorigin="anonymous">
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+	crossorigin="anonymous"></script>
 <script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" crossorigin="anonymous"></script>
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	crossorigin="anonymous"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js" crossorigin="anonymous"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular.min.js"
+	crossorigin="anonymous"></script>
 <script
-	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js" crossorigin="anonymous"></script>
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-route.min.js"
+	crossorigin="anonymous"></script>
 <!-- custom scripts -->
 <script type="text/javascript" src="js/app.js"></script>
 <script type="text/javascript" src="js/service.js"></script>
@@ -26,76 +30,24 @@
 <link href="css/stylesheet.css" rel="stylesheet" type="text/css">
 </head>
 <body class="vertical-center" ng-app="app">
-	<div class="container">
-		<div class="panel panel-default" ng-controller="uploadcontroller">
-			<div class="panel-heading">{{ baseDir }}</div>
+	<div ng-view></div>
+	<div class="container" ng-controller="indexcontroller">
+		<div class="panel panel-default">
+			<div class="panel-heading">Index of operations</div>
 			<div class="panel-body">
-				<label class="btn btn-info btn-file"> Add <input type="file"
-					style="display: none;">
-				</label>
-				<div class="btn-group btn-md btn-sm btn-xs">
-					<button type="button" class="btn btn-success">Start</button>
-					<button type="button" class="btn btn-warning disabled">Stop</button>
-					<button type="button" class="btn btn-danger">Delete</button>
-				</div>
-				<br> <br>
-				<div class="table-responsive">
-					<table
-						class="table table-condensed table-hover table-xs table-sm table-md">
-						<thead class="thead-default">
-							<tr class="hover-hand">
-								<th class="col-xs-1" ng-click="orderByField('index')">#</th>
-								<th class="col-xs-4" ng-click="orderByField('name')">Name <i
-									ng-show="propertyName === 'name' && reverse === false"
-									class="fa fa-fw fa-sort-asc"></i><i
-									ng-show="propertyName === 'name' && reverse === true"
-									class="fa fa-fw fa-sort-desc"></i></th>
-								<th class="col-xs-3" ng-click="orderByField('progress')">Progress<i
-									ng-show="propertyName === 'progress' && reverse === false"
-									class="fa fa-fw fa-sort-asc"></i><i
-									ng-show="propertyName === 'progress' && reverse === true"
-									class="fa fa-fw fa-sort-desc"></i></th>
-								<th class="col-xs-1" ng-click="orderByField('status')">Status<i
-									ng-show="propertyName === 'status' && reverse === false"
-									class="fa fa-fw fa-sort-asc"></i><i
-									ng-show="propertyName === 'status' && reverse === true"
-									class="fa fa-fw fa-sort-desc"></i></th>
-								<th class="col-xs-1" ng-click="orderByField('size')">Size<i
-									ng-show="propertyName === 'size' && reverse === false"
-									class="fa fa-fw fa-sort-asc"></i><i
-									ng-show="propertyName === 'size' && reverse === true"
-									class="fa fa-fw fa-sort-desc"></i></th>
-								<th class="col-xs-2" ng-click="orderByField('lastModified')">Uploaded
-									On<i
-									ng-show="propertyName === 'lastModified' && reverse === false"
-									class="fa fa-fw fa-sort-asc"></i><i
-									ng-show="propertyName === 'lastModified' && reverse === true"
-									class="fa fa-fw fa-sort-desc"></i></i>
-								</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr
-								ng-repeat="file in fileList | orderBy : propertyName : reverse"
-								scope="row" class="clickable-row" ng-click="selectRow(file)">
-								<td class="col-xs-1">{{ $index + 1 }}</td>
-								<td class="col-xs-4">{{ file.name }}</td>
-								<td class="col-xs-3">
-									<div class="progress">
-										<div class="progress-bar bg-success" role="progressbar"
-											style="width: {{ file.progress | progressPercentage }}"
-											aria-valuenow="{{ file.progress }}" aria-valuemin="0"
-											aria-valuemax="100">{{ file.progress |
-											progressPercentage }}</div>
-									</div>
-								</td>
-								<td class="col-xs-1">{{ file.status | translateStatus }}</td>
-								<td class="col-xs-1">{{ file.size | formatFileSize }}</td>
-								<td class="col-xs-2">{{ file.lastModified | date:'yyyy-MM-dd
-									HH:mm:ss' }}</td>
-							</tr>
-						</tbody>
-					</table>
+				<div class="row">
+					<div class="col-xs-3"></div>
+					<div class="col-xs-6">
+						<div class="input-group">
+							<span class="input-group-addon"> <input type="radio">
+							</span> <span class="input-group-addon">File Upload</span> <input placeholder="baseDir"
+								type="text" class="form-control" ng-model="baseDir"> <span
+								class="input-group-btn">
+								<button class="btn btn-secondary" type="button" ng-click="changeView('fileUpload')">Go!</button>
+							</span>
+						</div>
+					</div>
+					<div class="col-xs-3"></div>
 				</div>
 			</div>
 		</div>

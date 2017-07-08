@@ -1,6 +1,16 @@
 /**
  * 
  */
+app.controller('indexcontroller', function($scope, $location){
+	$scope.baseDir = "case101";
+	sessionStorage.setItem('baseDir', $scope.baseDir);
+	$scope.changeView = function(viewName) {
+		var url = "/" + viewName + "/" + sessionStorage.getItem('baseDir');
+		console.log(url);
+		$location.path(url); 
+	}
+});
+
 app.controller('uploadcontroller',
 				function($scope) {
 					var file1 = {
@@ -35,6 +45,7 @@ app.controller('uploadcontroller',
 					$scope.selectRow = function(file) {
 						console.log(file.name);
 					};
+					$scope.init
 					/*var map = $location.search();
 					sessionStorage.setItem('baseDir', map.baseDir);*/
 					$scope.baseDir = sessionStorage.getItem('baseDir');

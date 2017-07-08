@@ -1,4 +1,4 @@
-package com.cadence.upload.controller;
+/*package com.cadence.upload.controller;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -31,7 +31,7 @@ public class IndexController {
 	
     @GetMapping("/")
     public String index() {
-    	return "error";
+    	return "index";
     }
 
-}
+}*/
