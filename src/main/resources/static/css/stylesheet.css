@@ -1,6 +1,11 @@
 @CHARSET "ISO-8859-1";
 
-.hover-hand th{
+.buffer {
+	margin-top: 2%;
+	margin-bottom: 2%;
+}
+
+.hover-hand th {
 	cursor: pointer;
 }
 
