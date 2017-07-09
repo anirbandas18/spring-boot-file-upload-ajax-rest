@@ -2,10 +2,12 @@
  * 
  */
 app.controller('operationscontroller', function($scope, $location){
+	$scope.operation = 'fileupload';
 	$scope.go = function(path) {
 		sessionStorage.setItem('baseDir', $scope.baseDir);
 		console.log(sessionStorage.getItem('baseDir'));
-		$location.path(path);
+		console.log($scope.operation);
+		$location.path($scope.operation);
 	};
 });
 
