@@ -18,32 +18,10 @@
 				class="table table-condensed table-hover table-xs table-sm table-md">
 				<thead class="thead-default">
 					<tr class="hover-hand" ng-click="resetHighlightedRows()">
-						<th class="col-xs-1" ng-click="orderByField('index')">#</th>
-						<th class="col-xs-4" ng-click="orderByField('name')">Name <i
-							ng-show="propertyName === 'name' && reverse === false"
+						<th class="col-xs-2" ng-click="orderByField(f)" ng-repeat="f in fields">{{ f | capitalizeFirstCharacter }}<i
+							ng-show="ascending(f)"
 							class="fa fa-fw fa-sort-asc"></i><i
-							ng-show="propertyName === 'name' && reverse === true"
-							class="fa fa-fw fa-sort-desc"></i></th>
-						<th class="col-xs-3" ng-click="orderByField('progress')">Progress<i
-							ng-show="propertyName === 'progress' && reverse === false"
-							class="fa fa-fw fa-sort-asc"></i><i
-							ng-show="propertyName === 'progress' && reverse === true"
-							class="fa fa-fw fa-sort-desc"></i></th>
-						<th class="col-xs-1" ng-click="orderByField('status')">Status<i
-							ng-show="propertyName === 'status' && reverse === false"
-							class="fa fa-fw fa-sort-asc"></i><i
-							ng-show="propertyName === 'status' && reverse === true"
-							class="fa fa-fw fa-sort-desc"></i></th>
-						<th class="col-xs-1" ng-click="orderByField('size')">Size<i
-							ng-show="propertyName === 'size' && reverse === false"
-							class="fa fa-fw fa-sort-asc"></i><i
-							ng-show="propertyName === 'size' && reverse === true"
-							class="fa fa-fw fa-sort-desc"></i></th>
-						<th class="col-xs-2" ng-click="orderByField('lastModified')">Uploaded
-							On<i
-							ng-show="propertyName === 'lastModified' && reverse === false"
-							class="fa fa-fw fa-sort-asc"></i><i
-							ng-show="propertyName === 'lastModified' && reverse === true"
+							ng-show="descending(f)"
 							class="fa fa-fw fa-sort-desc"></i></i>
 						</th>
 					</tr>
@@ -51,8 +29,8 @@
 				<tbody>
 					<tr ng-class="{ active : selectedFile.name == file.name  }" 
 						ng-repeat="file in uploadedFileList | orderBy : propertyName : reverse"
-						scope="row" ng-click="selectRow(file)"><!-- file.name == selectedFile.name -->
-						<td class="col-xs-1">{{ $index + 1 }}</td>
+						scope="row" ng-click="selectRow(file)">
+						<td class="col-xs-1">{{ file.index }}</td>
 						<td class="col-xs-4">{{ file.name }}</td>
 						<td class="col-xs-3">
 							<div class="progress">

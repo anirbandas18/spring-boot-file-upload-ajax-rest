@@ -22,6 +22,26 @@ app.filter('progressPercentage', function() {
 
 });
 
+app.filter('capitalizeFirstCharacter', function() {
+	return function(phrase) {
+		var tokens = phrase.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+		var formattedStr = "";
+		for(var i = 0 ; i < tokens.length ; i++) {
+			var word = tokens[i];
+			var ascii = word.charCodeAt(0);
+			if(ascii >= 65 && ascii <= 90 || ascii >= 97 && ascii <= 122) {
+				if(ascii >= 97 && ascii <= 122) {
+					ascii = ascii - 32;
+				}
+			} 
+			word = String.fromCharCode(ascii) + word.substring(1);
+			formattedStr = formattedStr + word + " ";
+		}
+		formattedStr = formattedStr.trim();
+		return formattedStr;
+	}
+});
+
 app.filter('translateStatus', function() {
 	return function(status) {
 		var translation = "";
