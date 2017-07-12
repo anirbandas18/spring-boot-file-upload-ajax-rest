@@ -5,8 +5,8 @@ app.controller('operationscontroller', function($scope, $location){
 	$scope.operation = 'fileupload';
 	$scope.go = function(path) {
 		sessionStorage.setItem('baseDir', $scope.baseDir);
-		console.log(sessionStorage.getItem('baseDir'));
-		console.log($scope.operation);
+		/*console.log(sessionStorage.getItem('baseDir'));
+		console.log($scope.operation);*/
 		$location.path($scope.operation);
 	};
 });
@@ -33,21 +33,21 @@ app.controller('fileuploadcontroller',
 					}
 					$scope.resetHighlightedRows = function () {
 						$scope.selectedFile = angular.copy($scope.blankFile);
-						console.log($scope.selectedFile);
+						//console.log($scope.selectedFile);
 					}
 					$scope.resetHighlightedRows();
 					$scope.onFileSelection = function () {
 						for(var i = 0 ; i < $scope.selectedFileList.length ; i++ ) {
 							// post file to server form here
 							var fileModel = new FileModel($scope.selectedFileList[i]);
-							console.log(fileModel);
+							//console.log(fileModel);
 							$scope.uploadedFileList.push(fileModel);
 						}
 					};
 					$scope.selectRow = function(file) {
 						$scope.selectedFile = angular.copy(file);
-						console.log(angular.equals($scope.selectedFile,file));
-						console.log($scope.selectedFile);
+						//console.log(angular.equals($scope.selectedFile,file));
+						//console.log($scope.selectedFile);
 					};
 					$scope.baseDir = sessionStorage.getItem('baseDir');
 				});
