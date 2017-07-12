@@ -3,7 +3,7 @@
 	<div class="panel panel-default">
 		<div class="panel-heading">{{ baseDir }}</div>
 		<div class="panel-body">
-			<label class="btn btn-info btn-file"> Add <input type="file"
+			<label class="btn btn-info btn-file"> Add <input type="file" file-input ng-model="selectedFileList" multiple
 				style="display: none;">
 			</label>
 			<div class="btn-group btn-md btn-sm btn-xs">
@@ -49,7 +49,7 @@
 					</thead>
 					<tbody>
 						<tr
-							ng-repeat="file in fileList | orderBy : propertyName : reverse"
+							ng-repeat="file in uploadedFileList | orderBy : propertyName : reverse"
 							scope="row" class="clickable-row" ng-click="selectRow(file)">
 							<td class="col-xs-1">{{ $index + 1 }}</td>
 							<td class="col-xs-4">{{ file.name }}</td>

@@ -34,7 +34,7 @@ app.controller('fileuploadcontroller',
 						size : 48728,
 						lastModified : 1497376984778
 					};
-					$scope.fileList = [ file1, file2, file3 ];
+					$scope.uploadedFileList = [ file1, file2, file3 ];
 					$scope.propertyName = 'name';
 					$scope.reverse = true;
 					$scope.orderByField = function(propertyName) {
@@ -45,8 +45,5 @@ app.controller('fileuploadcontroller',
 					$scope.selectRow = function(file) {
 						console.log(file.name);
 					};
-					$scope.init
-					/*var map = $location.search();
-					sessionStorage.setItem('baseDir', map.baseDir);*/
 					$scope.baseDir = sessionStorage.getItem('baseDir');
 				});
