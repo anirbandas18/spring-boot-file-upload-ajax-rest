@@ -24,7 +24,8 @@ app.filter('progressPercentage', function() {
 
 app.filter('capitalizeFirstCharacter', function() {
 	return function(phrase) {
-		var tokens = phrase.split("(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z])");
+		phrase = phrase.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
+		var tokens = phrase.split(" ");
 		console.log(tokens);
 		var formattedStr = "";
 		for(var i = 0 ; i < tokens.length ; i++) {
