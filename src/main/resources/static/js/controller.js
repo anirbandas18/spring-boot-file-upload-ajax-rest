@@ -12,15 +12,14 @@ app.controller('operationscontroller', function($scope, $location){
 });
 
 app.controller('fileuploadcontroller',
-				function($scope) {
-					var file1 = {
-						name : "Introduction to R programming.mp4",
-						progress : 25,
-						status : "InProgress",
-						size : 4868729,
-						lastModified : 1499376984778
-					};
-					var file2 = {
+				function($scope, FileModel) {
+					var file1 = new FileModel();
+					file1.name = "Introduction to R programming.mp4";
+					file1.progress = 25;
+					file1.status = "InProgress";
+					file1.size = 4868729;
+					file1.lastModified = 1499376984778;
+					/*var file2 = {
 						name : "Introduction to machine learning_ Alex Simola.pdf",
 						progress : 100,
 						status : "Completed",
@@ -33,8 +32,9 @@ app.controller('fileuploadcontroller',
 						status : "TBD",
 						size : 48728,
 						lastModified : 1497376984778
-					};
-					$scope.uploadedFileList = [ file1, file2, file3 ];
+					};*/
+					console.log(file1.toString());
+					$scope.uploadedFileList = [ file1 ];
 					$scope.propertyName = 'name';
 					$scope.reverse = true;
 					$scope.orderByField = function(propertyName) {
@@ -42,6 +42,12 @@ app.controller('fileuploadcontroller',
 								: false;
 						$scope.propertyName = propertyName;
 					}
+					$scope.onFileSelection = function () {
+						for(var i = 0 ; i < $scope.selectedFileList.length ; i++ ) {
+							var file = $scope.selectedFileList[i];
+							console.log(file);
+						}
+					};
 					$scope.selectRow = function(file) {
 						console.log(file.name);
 					};
