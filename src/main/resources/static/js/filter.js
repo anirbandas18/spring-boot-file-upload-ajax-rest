@@ -35,6 +35,9 @@ app.filter('translateStatus', function() {
 		case 'Completed':
 			translation = "Finished";
 			break;
+		case '':
+			translation = "";
+			break;
 		default:
 			translation = "Stopped";
 			break;

@@ -17,7 +17,7 @@
 			<table
 				class="table table-condensed table-hover table-xs table-sm table-md">
 				<thead class="thead-default">
-					<tr class="hover-hand">
+					<tr class="hover-hand" ng-click="resetHighlightedRows()">
 						<th class="col-xs-1" ng-click="orderByField('index')">#</th>
 						<th class="col-xs-4" ng-click="orderByField('name')">Name <i
 							ng-show="propertyName === 'name' && reverse === false"
@@ -49,9 +49,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-class="{ active: file.name == selectedFile.name }"
+					<tr ng-class="{ active : selectedFile.name == file.name  }" 
 						ng-repeat="file in uploadedFileList | orderBy : propertyName : reverse"
-						scope="row" class="clickable-row" ng-click="selectRow(file)">
+						scope="row" ng-click="selectRow(file)"><!-- file.name == selectedFile.name -->
 						<td class="col-xs-1">{{ $index + 1 }}</td>
 						<td class="col-xs-4">{{ file.name }}</td>
 						<td class="col-xs-3">
