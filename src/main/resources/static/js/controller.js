@@ -14,10 +14,6 @@ app.controller('operationscontroller', function($scope, $location){
 app.controller('fileuploadcontroller',
 				function($scope, FileModel) {
 					$scope.blankFile = {index : 1, name : 4, progress : 3, status : 1, size : 1, lastModified : 2};
-					for(var key in $scope.blankFile) {
-					    var value = $scope.blankFile[key];
-					    console.log(key + " " + value);
-					}
 					var f2 = {name : "Introduction to R programming.mp4", size : 4868729, lastModified : 1499376984778, progress : 25, status : "InProgress"};
 					var f1 = {name : "Introduction to machine learning_ Alex Simola.pdf", size : 2898689878, lastModified : 1498376984778, progress : 100, status : "Completed"};
 					var f3 = {name : "Machine Learning Resource Guide 2014.pdf", size : 48728, lastModified : 1497376984778, progress : 0, status : "TBD"};
