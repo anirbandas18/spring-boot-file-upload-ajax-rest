@@ -25,8 +25,11 @@ app.controller('fileuploadcontroller', function($scope, FileModel, FileUploadMet
 											result);
 									for (var i = 0; i < fum.filesInBaseDir.length; i++) {
 										var file = fum.filesInBaseDir[i];
+										var fileModel = new FileModel(file);
+										fileModel.status = "Completed";
+										fileModel.progress = 100;
 										$scope.uploadedFileList
-												.push(new FileModel(file));
+												.push(fileModel);
 									}
 								});
 					};
