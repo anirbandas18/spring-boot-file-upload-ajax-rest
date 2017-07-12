@@ -1,4 +1,4 @@
-package com.cadence.upload.core;
+/*package com.cadence.upload.core;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -42,3 +42,4 @@ public class RestGlobalExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
 }
+*/

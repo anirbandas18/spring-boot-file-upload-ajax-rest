@@ -26,7 +26,6 @@ app.filter('capitalizeFirstCharacter', function() {
 	return function(phrase) {
 		phrase = phrase.replace(/([A-Z])/g, ' $1').replace(/^./, function(str){ return str.toUpperCase(); });
 		var tokens = phrase.split(" ");
-		console.log(tokens);
 		var formattedStr = "";
 		for(var i = 0 ; i < tokens.length ; i++) {
 			var word = tokens[i];

@@ -13,6 +13,17 @@ app.factory('FileModel', function() {
 	FileModel.index = 1;
 	FileModel.prototype.toString = function () {
 		return JSON.stringify(this);
-	}
+	};
 	return FileModel;
+});
+
+app.factory('FileUploadMetadataModel', function(){
+	function FileUploadMetadataModel(fileUploadMetadata) {
+		this.fileChunkSize = fileUploadMetadata.fileChunkSize;
+		this.filesInBaseDir = fileUploadMetadata.filesInBaseDir;
+	};
+	FileUploadMetadataModel.prototype.toString = function () {
+		return JSON.stringify(this);
+	};
+	return FileUploadMetadataModel;
 });
