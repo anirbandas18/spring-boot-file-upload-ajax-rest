@@ -32,7 +32,8 @@ app.controller('fileuploadcontroller',
 						}
 					};
 					$scope.selectRow = function(file) {
-						console.log(file.name);
+						$scope.selectedFile = file;
+						console.log($scope.selectedFile);
 					};
 					$scope.baseDir = sessionStorage.getItem('baseDir');
 				});

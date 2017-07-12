@@ -49,7 +49,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr
+					<tr ng-class="{ active: file.name == selectedFile.name }"
 						ng-repeat="file in uploadedFileList | orderBy : propertyName : reverse"
 						scope="row" class="clickable-row" ng-click="selectRow(file)">
 						<td class="col-xs-1">{{ $index + 1 }}</td>
