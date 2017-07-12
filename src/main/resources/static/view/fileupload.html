@@ -14,25 +14,24 @@
 		</div>
 		<br> <br>
 		<div class="table-responsive">
-			<table
-				class="table table-condensed table-hover table-xs table-sm table-md">
+			<table class="table table-condensed table-hover table-lg">
 				<thead class="thead-default">
 					<tr class="hover-hand" ng-click="resetHighlightedRows()">
-						<th class="col-xs-2" ng-click="orderByField(f)" ng-repeat="f in fields">{{ f | capitalizeFirstCharacter }}<i
-							ng-show="ascending(f)"
-							class="fa fa-fw fa-sort-asc"></i><i
-							ng-show="descending(f)"
+						<th class="col-xs-{{ value }}" ng-click="orderByField(key)"
+							ng-repeat="(key,value) in blankFile">{{ key |
+							capitalizeFirstCharacter }}<i ng-show="ascending(key)"
+							class="fa fa-fw fa-sort-asc"></i><i ng-show="descending(key)"
 							class="fa fa-fw fa-sort-desc"></i></i>
 						</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-class="{ active : selectedFile.name == file.name  }" 
+					<tr ng-class="{ active : selectedFile.name == file.name  }"
 						ng-repeat="file in uploadedFileList | orderBy : propertyName : reverse"
 						scope="row" ng-click="selectRow(file)">
-						<td class="col-xs-1">{{ file.index }}</td>
-						<td class="col-xs-4">{{ file.name }}</td>
-						<td class="col-xs-3">
+						<td class="col-xs-1 ">{{ file.index }}</td>
+						<td class="col-xs-4 ">{{ file.name }}</td>
+						<td class="col-xs-3 ">
 							<div class="progress">
 								<div class="progress-bar bg-success" role="progressbar"
 									style="width: {{ file.progress | progressPercentage }}"
@@ -41,9 +40,9 @@
 									}}</div>
 							</div>
 						</td>
-						<td class="col-xs-1">{{ file.status | translateStatus }}</td>
-						<td class="col-xs-1">{{ file.size | formatFileSize }}</td>
-						<td class="col-xs-2">{{ file.lastModified | date:'yyyy-MM-dd
+						<td class="col-xs-1 ">{{ file.status | translateStatus }}</td>
+						<td class="col-xs-1 ">{{ file.size | formatFileSize }}</td>
+						<td class="col-xs-2 ">{{ file.lastModified | date:'yyyy-MM-dd
 							HH:mm:ss' }}</td>
 					</tr>
 				</tbody>

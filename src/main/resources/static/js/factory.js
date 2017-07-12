@@ -10,7 +10,7 @@ app.factory('FileModel', function() {
 		this.size = file.size
 		this.lastModified = file.lastModified;
 	};
-	FileModel.index = 0;
+	FileModel.index = 1;
 	FileModel.prototype.toString = function () {
 		return JSON.stringify(this);
 	}
