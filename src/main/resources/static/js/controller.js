@@ -26,6 +26,7 @@ app.controller('fileuploadcontroller',
 					}
 					$scope.onFileSelection = function () {
 						for(var i = 0 ; i < $scope.selectedFileList.length ; i++ ) {
+							// post file to server form here
 							var fileModel = new FileModel($scope.selectedFileList[i]);
 							console.log(fileModel);
 							$scope.uploadedFileList.push(fileModel);
